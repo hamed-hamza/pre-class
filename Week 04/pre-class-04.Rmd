@@ -9,14 +9,31 @@ Make sure you commit this often with meaningful messages.
 ### Question 1:
 
 Using a loop, print the integers from 1 to 50. 
+```{r}
+for(i in 1:50) {print(i)}
+```
 
 ### Question 2:
 
 A.  Using a loop, add all the integers between 0 and 1000.
+```{r}
+j <- 0
+for(i in 0:1000) {j <- j +i}
+j
+```
 
 B. Now, add all the EVEN integers between 0 and 1000 (hint: use seq())
+```{r}
+j <- 0
+for(i in seq(0, 1000, 2)) {j <- j + i}
+j
+```
 
 C. Now, repeat A and B WITHOUT using a loop.
+```{r}
+sum(0:1000)
+
+```
 
 ### Question 3:
 
@@ -35,5 +52,30 @@ survey <- data.frame(
 The response to each question should be an integer between 1 and 5. Obviously, we have some bad values in the dataframe. The goal of this problem is to fix them.
 
 A. Using a loop, create a new dataframe called survey.clean where all the invalid values (those that are not integers between 1 and 5) are set to NA.
+```{r}
+survey.clean <- survey
+
+for(i in 2:ncol(survey.clean)) {
+  
+ data.temp <- survey.clean[,i]
+ 
+ data.temp[(data.temp %in% 1:5) == F] <- NA
+ 
+ survey.clean[,i] <- data.temp
+ 
+}
+
+survey.clean
+```
 
 B. Now, again using a loop, add a new column to the dataframe called “invalid.answers” that indicates, for each participant, how many bad answers they gave.
+```{r}
+survey.clean$invalid.answers <- NA
+
+for(row.i in 1:nrow(survey.clean)) 
+{data.temp <- survey.clean[row.i,]
+n.na <- sum(is.na(data.temp)) - 1 
+survey.clean$invalid.answers[row.i] <- n.na}
+survey.clean
+```
+
