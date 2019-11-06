@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1. Read the source code for each of the following three functions, puzzle out what they do, and then brainstorm better names.
 
-```
+```{r}
 f1 <- function(string, prefix) {
   substr(string, 1, nchar(prefix)) == prefix
 }
@@ -25,9 +25,11 @@ f3 <- function(x, y) {
 }
 ```
 ```{r}
+# It tests whether the prefix argument is the same prefix as in the string
 has_prefix <- function(string, prefix) {
   substr(string, 1, nchar(prefix)) == prefix
 }
+# It removes the last element of x, only of the length greater than 1 otherwise returns NULL
 has_prefix(c("hey_ho", "another_pre"), "hey")
 remove_last <- function(x) {
   if (length(x) <= 1) return(NULL)
