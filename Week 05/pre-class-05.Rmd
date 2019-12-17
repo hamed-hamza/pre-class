@@ -100,11 +100,50 @@ B. Assign all the numeric columns of the original WCGS dataset to a new dataset 
 C. Using a loop and your new function, standardize all the variables WCGS.new dataset.
 D. What should the mean and standard deviation of all your new standardized variables be? Test your prediction by running a loop
 
+```{r}
+#A
+standardize.me <- function(x) {
+output <- (x - mean(x)) / sd(x)
+return(output)}
+
+#B
+num.columns <- c(2, 3, 4, 5, 6, 7, 9, 13)
+WCGS.new <- wcgs[,num.columns]
+
+#C
+for(col.i in 1:ncol(WCGS.new)) 
+{WCGS.new[,col.i] <- standardize.me(WCGS.new[,col.i])}
+head(WCGS.new)
+for(i in 1:ncol(WCGS.new)) {
+ print(paste("The mean of column ", col.i, " is ", round(mean(WCGS.new[,col.i]), 2), 
+             " and the standard deviation is ",
+             round(sd(WCGS.new[,col.i]), 2), sep = ""))}
+```
 
 
 
 ### Question 2: Looping to Calculate
 
 A. Using a loop, calculate the mean weight of the subjects separated by the type of CHD they have.
+```{r}
+result.df <- data.frame("weight" = unique(wcgs$weight),
+                        "mean.weight" = NA,
+                        stringsAsFactors = F)
+
+for(row.i in 1:nrow(result.df)) {
+  
+ weight.i <- result.df$weight[row.i]
+ 
+ mean.typechd.i <- mean(subset(wcgs, weight == weight.i)$typechd)
+ 
+ result.df$mean.typechd[row.i] <- mean.typechd.i}
+
+result.df
+```
+
 B. Now do the same thing, but now don’t use a loop
+```{r}
+group_by(wcgs, typechd) %>%
+summarise(mean = mean(weight))
+``` 
 
